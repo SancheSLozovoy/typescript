@@ -11,7 +11,7 @@ enum actionMap {
 
 
 // TODO Interface
-interface Funct1 {
+interface FunctionProps {
     id: number;
     isActive: boolean;
     callback: () => void;
@@ -24,7 +24,7 @@ interface FunctReturn {
 }
 
 
-function func({ id, isActive, callback }: Funct1): FunctReturn[] {
+function func({ id, isActive, callback }: FunctionProps): FunctReturn[] {
     return [
         { name: 'name', value: 123 }
     ]

@@ -12,18 +12,20 @@ type Type = {
 }
 
 
-const f: Type = (arg: number | string) => {
-    if (typeof arg === 'number') return { d: 1 }
+function f(arg: number): { d: 1 };
+function f(arg: string): { z: 2 };
+function f(arg: number | string) {
+    if (typeof arg === 'number') {
+        return { d: 1 };
+    }
     return { z: 2 };
-};
-
+}
 
 const res1 = f(1);
 const res2 = f("test");
 
-
-console.log(res1.d);
-console.log(res2.z)
+console.log(res1.d);  // 1
+console.log(res2.z);  // 2
 
 
 // 2) Реализовать класс SomeClass:
@@ -34,25 +36,27 @@ console.log(res2.z)
 
 class SomeClass<T> {
     private methods: T;
+
     constructor(methods: T) {
-        a
         this.methods = methods;
     }
-    run<K extends keyof T>(name: K, arg: Parameters<T[K]>[0]) {
+
+    run<K extends keyof T>(name: K, arg: Parameters<T[K]>[0]): ReturnType<T[K]> {
         const method = this.methods[name];
-        if (typeof method === "function") return method(arg)
-        throw new Error("Такого метода не существует")
+        if (typeof method === "function") {
+            return method(arg);
+        }
+        throw new Error("Такого метода не существует");
     }
 }
-
 
 const methods = {
     runMethodOne: (arg: number) => console.log('runMethodOne', arg),
     runMethodTwo: (arg: any) => console.log('runMethodTwo', arg)
 };
-const a = new SomeClass(methods);
 
+const instance = new SomeClass(methods);
 
-a.run("runMethodOne", 1);
-a.run("runMethodTwo", null)
-a.run("runMethodsdjhfbs", null)]; //error
+instance.run("runMethodOne", 1);   // runMethodOne 1
+instance.run("runMethodTwo", null); // runMethodTwo null
+instance.run("runMethodsdjhfbs", null); // Ошибка
